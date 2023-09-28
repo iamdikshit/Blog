@@ -1,9 +1,16 @@
 import express from "express";
 import morgan from "morgan";
+import bodyParser from "body-parser";
 import userRouter from "./routes/userRoute.js";
 import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controller/errorHandler.js";
 const app = express();
+
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Development logging
 if (process.env.NODE_ENV === "development") {
