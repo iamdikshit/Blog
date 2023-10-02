@@ -1,6 +1,11 @@
 import express from "express";
 import { getUser } from "../controller/userController.js";
-import { signUp, signIn, activate } from "../controller/auth/authController.js";
+import {
+  signUp,
+  signIn,
+  activate,
+  logout,
+} from "../controller/auth/authController.js";
 
 const router = express.Router();
 
@@ -10,6 +15,7 @@ router.get("/", getUser);
 // SignUp
 router.post("/signup", signUp);
 router.post("/signin", signIn);
+router.get("/logout", logout);
 router.get("/activate/:token", activate);
 
 export default router;
