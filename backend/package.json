@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node --watch server.js",
-    "dev": "nodemon server.js",
-    "start:prod": "set NODE_ENV=production&& nodemon server.js"
+    "dev": "supervisor server.js",
+    "start:prod": "set NODE_ENV=production&& supervisor server.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
@@ -22,6 +23,7 @@
     "mongoose": "^7.5.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.5",
+    "nodemon": "^3.0.1",
     "validator": "^13.11.0"
   }
 }

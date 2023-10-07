@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import userRouter from "./routes/userRoute.js";
 import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controller/errorHandler.js";
+import config from "./configuration.js";
 const app = express();
 
 // support parsing of application/json type post data
@@ -13,7 +14,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Development logging
-if (process.env.NODE_ENV === "development") {
+
+if (config.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 

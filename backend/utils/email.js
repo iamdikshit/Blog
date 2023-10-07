@@ -1,21 +1,22 @@
 import nodemailer from "nodemailer";
+import config from "../configuration.js";
 
 class Email {
   constructor(user, url) {
     (this.to = user.email),
       (this.name = user.name),
       (this.url = url),
-      (this.from = `Dikshit Bhardwaj ${process.env.MAIL_FROM}`);
+      (this.from = `Dikshit Bhardwaj ${config.MAIL_FROM}`);
   }
 
   newTransporter() {
     return nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: process.env.MAIL_PORT,
+      host: config.MAIL_HOST,
+      port: config.MAIL_PORT,
 
       auth: {
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
+        user: config.MAIL_USERNAME,
+        pass: config.MAIL_PASSWORD,
       },
     });
   }
@@ -42,6 +43,11 @@ class Email {
     ${this.url}
     `;
     await this.send(template, "Activate email!");
+  }
+
+  async sendResetPassword() {
+    const template = `Click on the link to reset your password.\n ${this.url}`;
+    await this.send(template, "Reset Password");
   }
 }
 
