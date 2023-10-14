@@ -1,0 +1,27 @@
+[
+  {
+    title: "How javascript works?",
+    cover: "pic1.jpg",
+    category: ["652950d890df0f6e5b8a2831"],
+    tags: ["javascript", "web development"],
+    body: "JavaScript is a high-level and single-threaded programming language. When we refer to a programming language as high-level, we mean that it has a high level of abstraction. As a result, it improves human understanding and usage.ake a look at the sample below.\nIf you had never used JavaScript, you would be able to tell right away that this line of code prints 'Hello World!.'\nAs we said, JavaScript is a single-threaded programming language. It means that only one command is performed at a time.JavaScript has a blocking and synchronous nature. To put it another way, the code runs in the order it appears, and each section of code must complete running before moving on to the next. Therefore, it is still possible to execute applications asynchronously and without blocking.",
+    author: "651aca798dc7a91c79e71983",
+  },
+
+  {
+    title: "What is a Technical SEO Specialist?",
+    cover: "pic1.jpg",
+    category: ["652a0986530256a814b13f75"],
+    tags: ["SEO", "web development"],
+    body: "If you’re investing in content marketing to grow your business, you’re no doubt familiar with search engine optimization (SEO). But on-page SEO isn’t the only piece of the puzzle — you also need technical SEO to help visitors find, navigate, and read content on your website.\nIThese are complicated tasks with a potentially huge time commitment, and likely more than you can handle as a marketer, developer, or small business owner. Luckily, you can delegate each of these responsibilities to a skilled technical SEO specialist working full-time on your site.But knowing when to hire a technical SEO specialist is a lot more complicated than knowing what they do.That’s why we wrote this guide covering everything you should know about technical SEO specialists.\n Our goal is to familiarize you with their many benefits so you can make an informed decision about finding one for your business.",
+    author: "651aca798dc7a91c79e71983",
+  },
+  {
+    title: "How to Use React DevTools in Safari",
+    cover: "pic1.jpg",
+    category: ["652950d890df0f6e5b8a2831"],
+    tags: ["Reactjs", "web development"],
+    body: "However, if you use Safari, you may be disappointed to learn that there is no browser extension for React DevTools like there is in Chrome and Firefox.Fortunately, there is a solution. You can still use standalone React DevTools to connect to your site in Safari.\nThis practical tool is also useful for debugging non-browser-based React applications, like React Native apps. It can help simplify the process of optimizing and debugging your code, making your workflow more efficient.\nIn this article, you’ll learn how to install and use the standalone version of React DevTools to debug a React application running in Safari. In addition, the article also highlights the differences between the standalone version and the Chrome extension, as well as some limitations of the tools.",
+    author: "651aca798dc7a91c79e71983",
+  },
+];

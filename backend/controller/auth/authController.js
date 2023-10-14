@@ -57,6 +57,10 @@ const createSendToken = (user, statusCode, req, res) => {
 *************************************
 */
 export const signIn = catchAsync(async (req, res, next) => {
+  if (req.params.admin)
+    if (req.params?.admin !== "admin")
+      return next(new AppError("This route cannot found", 404));
+
   if (!req.body.email || !req.body.password)
     return next(
       new AppError("Email or password cannot be empty! please try again.", 400)
@@ -66,6 +70,12 @@ export const signIn = catchAsync(async (req, res, next) => {
 
   if (!user || !(await bcrypt.compare(req.body.password, user.password)))
     return next(new AppError("Wrong email or password please try again", 401));
+
+  // Check user is admin or not
+  if (req.params.admin)
+    if (req.params?.admin == "admin")
+      if (!["admin", "employee"].includes(user.role))
+        return next(new AppError("Your are not authorized to login.", 401));
 
   if (!user.active)
     return next(

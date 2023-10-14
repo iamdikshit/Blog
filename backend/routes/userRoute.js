@@ -16,6 +16,8 @@ const router = express.Router();
 // SignUp
 router.post("/signup", signUp);
 router.post("/signin", signIn);
+// signUp for Admin
+router.post("/signin/:admin", signIn);
 router.get("/logout", logout);
 router.post("/forgot", forgot);
 router.post("/reset/:token", resetPassword);
