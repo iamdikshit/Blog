@@ -45,6 +45,7 @@ export const getAllBlog = catchAsync(async (req, res, next) => {
     return next(new AppError("Page does not exist", 404));
 
   const blog = await Blog.find(queryStr)
+    .populate("category")
     .sort(sortBy)
     .select(limitByField)
     .skip(skip)
