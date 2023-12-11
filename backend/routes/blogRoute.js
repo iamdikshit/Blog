@@ -4,6 +4,8 @@ import {
   deleteBlog,
   getAllBlog,
   updateBlog,
+  uploadImage,
+  resizeImage,
 } from "../controller/blogController.js";
 
 import { updateLike } from "../controller/likeController.js";
@@ -19,8 +21,22 @@ const router = express.Router();
 
 router.get("/", getAllBlog);
 
-router.post("/", protect, restrict("admin", "employee"), createBlog);
-router.patch("/:id", protect, restrict("admin", "employee"), updateBlog);
+router.post(
+  "/",
+  protect,
+  restrict("admin", "employee"),
+  uploadImage,
+  resizeImage,
+  createBlog
+);
+router.patch(
+  "/:id",
+  protect,
+  restrict("admin", "employee"),
+  uploadImage,
+  resizeImage,
+  updateBlog
+);
 router.delete("/:id", protect, restrict("admin", "employee"), deleteBlog);
 
 // Routes for like

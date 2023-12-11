@@ -1,6 +1,51 @@
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import Blog from "../models/blogModel.js";
+import multer from "multer";
+import sharp from "sharp";
+
+// Multer storage Configuration
+const storage = multer.memoryStorage();
+
+// Multer filter configuration
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Please select image file only!", 400), false);
+  }
+};
+
+const upload = multer({ storage: storage, fileFilter: multerFilter });
+export const uploadImage = upload.fields([{ name: "cover", maxCount: 1 }]);
+
+// Resize Image
+
+export const resizeImage = catchAsync(async (req, res, next) => {
+  if (!req.files.cover) return next();
+
+  req.body.cover = `blog-${
+    req.params.id ? req.params.id : Math.random(10).toString().split(".")[1]
+  }-${Date.now()}.jpeg`;
+
+  // resizing image
+  const photo = await sharp(req.files.cover[0].buffer)
+    .resize(1200, 630)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 });
+
+  if (process.env.NODE_ENV == "production") {
+    if (err) next(new AppError(err, 404));
+    photo.toBuffer((err, data, info) => {
+      console.log("Data :", data);
+      console.log(info);
+    });
+  } else {
+    photo.toFile(`public/images/blogs/${req.body.cover}`);
+  }
+
+  next();
+});
 
 export const getAllBlog = catchAsync(async (req, res, next) => {
   // filter
@@ -91,7 +136,7 @@ export const updateBlog = catchAsync(async (req, res, next) => {
   blog.save({ runValidators: true });
   res.status(200).json({
     status: "success",
-    message: "blog updated successfully",
+    message: "Blog updated successfully",
     data: blog,
   });
 });
