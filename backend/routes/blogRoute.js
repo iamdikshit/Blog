@@ -4,9 +4,10 @@ import {
   deleteBlog,
   getAllBlog,
   updateBlog,
-  uploadImage,
-  resizeImage,
+  getOneBlog,
 } from "../controller/blogController.js";
+
+import { imagePreProcessing, uploadImage } from "../utils/imageUploader.js";
 
 import { updateLike } from "../controller/likeController.js";
 
@@ -16,17 +17,18 @@ import {
   updateComment,
   deleteComment,
   getAllComments,
+  getOneComment,
 } from "../controller/commentController.js";
 const router = express.Router();
 
 router.get("/", getAllBlog);
-
+router.get("/:id", getOneBlog);
 router.post(
   "/",
   protect,
   restrict("admin", "employee"),
   uploadImage,
-  resizeImage,
+  imagePreProcessing("blog", { width: 1200, height: 630 }),
   createBlog
 );
 router.patch(
@@ -34,7 +36,7 @@ router.patch(
   protect,
   restrict("admin", "employee"),
   uploadImage,
-  resizeImage,
+  imagePreProcessing("blog", { width: 1200, height: 630 }),
   updateBlog
 );
 router.delete("/:id", protect, restrict("admin", "employee"), deleteBlog);
@@ -45,9 +47,10 @@ router.get("/like/:id", protect, updateLike);
 
 // Routes for Comments
 router.use(protect);
-router.post("/comment", createComment);
+router.get("/comment/all", getAllComments);
+router.get("/comment/:id", getOneComment);
+router.post("/comment/", createComment);
 router.patch("/comment/:id", updateComment);
 router.delete("/comment/:id", deleteComment);
-router.get("/comment", getAllComments);
 
 export default router;

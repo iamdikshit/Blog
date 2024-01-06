@@ -2,63 +2,11 @@ import catchAsync from "../utils/catchAsync.js";
 import Blog from "../models/blogModel.js";
 import AppError from "../utils/appError.js";
 import Comment from "../models/commentModel.js";
+import { getAll, getOne } from "./handlerFactory.js";
 
 // get all comments
-export const getAllComments = catchAsync(async (req, res, next) => {
-  // filter
-  const queryObject = { ...req.query };
-
-  const excludeField = ["page", "sort", "fields", "limit"];
-  // excluding field from query object
-  excludeField.forEach((ele) => delete queryObject[ele]);
-
-  // Advance filtering
-  let queryStr = JSON.stringify(queryObject);
-  // $ sign in front of operators
-  queryStr = queryStr.replace(
-    /\b(gte|gt|lte|lt|and|or)\b/g,
-    (match) => `$${match}`
-  );
-  queryStr = JSON.parse(queryStr);
-
-  // Sort
-  let sortBy;
-  if (req.query.sort) {
-    sortBy = req.query.sort.split(",").join(" ");
-  } else {
-    sortBy = "-createdAt";
-  }
-
-  // Limiting fields
-  let limitByField;
-  if (req.query.fields) {
-    limitByField = req.query.fields.split(",").join(" ");
-  } else {
-    limitByField = "-__v";
-  }
-
-  // Pagination
-  const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 10;
-  const skip = (page - 1) * limit;
-
-  const totalRecord = await Blog.countDocuments();
-  if (page * limit > totalRecord && page * limit > limit)
-    return next(new AppError("Page does not exist", 404));
-
-  // comment
-  const allComment = await Comment.find(queryStr)
-    .sort(sortBy)
-    .select(limitByField)
-    .skip(skip)
-    .limit(limit);
-
-  res.status(200).json({
-    status: "success",
-    results: allComment.length,
-    data: allComment,
-  });
-});
+export const getAllComments = getAll(Comment);
+export const getOneComment = getOne(Comment, "blog");
 // create comment
 // POST MethoblogDocumentd
 export const createComment = catchAsync(async (req, res, next) => {
