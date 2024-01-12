@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, "Please tell us tour email!"],
+    required: [true, "Please tell us your email!"],
     unique: true,
     lowercase: true,
     // Validation for email
